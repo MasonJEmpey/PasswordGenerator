@@ -1,16 +1,26 @@
 import {useState} from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
 
-function InputBox() {
-  const [inputText, setInputText] = useState('');
+interface InputBoxProps {
+  onLengthChange: (length: string) => void;
+}
+
+function InputBox({onLengthChange}: InputBoxProps) {
+  const [length, setLength] = useState('');
+
+  const handleInputChange = (text: string) => {
+    onLengthChange(text);
+    setLength(text);
+  };
 
   return (
     <View>
       <TextInput
         style={style.input}
         placeholder="Password Length (8-16)"
-        value={inputText}
-        onChangeText={setInputText}
+        value={length}
+        onChangeText={handleInputChange}
+        keyboardType="numeric"
       />
     </View>
   );
